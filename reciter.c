@@ -11,7 +11,7 @@ int main(int argc,char **argv)
   FILE *fp=fopen(argv[1],"rb");
 
     if(fp==NULL){
-	    puts("文件读取失败(1)");
+        puts("文件读取失败(1)");
     	return 1;
   }
   fseek(fp, 0, SEEK_END);
