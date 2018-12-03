@@ -11,17 +11,25 @@ int main(int argc,char **argv)
   FILE *fp=fopen(argv[1],"rb");
 
     if(fp==NULL){
-	    puts("文件读取失败1");
+	    puts("文件读取失败(1)");
     	return 1;
   }
   fseek(fp, 0, SEEK_END);
   fileLen = (unsigned long)ftell(fp);
-  if(fileLen == 0) puts("文件读取失败2");
+  if(fileLen == 0)
+  {
+    puts("文件读取失败(2)");
+    return 1;
+  }
   char *text = (char *) malloc(sizeof(char) * (fileLen+1));
   fseek(fp, 0, SEEK_SET);
   fread(text, sizeof(char), fileLen, fp);
   fclose(fp);
-  if(strlen(text) != fileLen) puts("文件读取失败");
+  if(strlen(text) != fileLen)
+  {
+    puts("文件读取失败(3)");
+    return 1;
+  }
   char *line = strtok(text,"\n"),*word;
   char input[25],*tip;
   unsigned int lineLen = 0,wrongs = 0,i;
