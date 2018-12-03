@@ -43,7 +43,8 @@ int main(int argc,char **argv)
     word++;
     tip = word;
     while(1){
-      scanf("%s",input);
+      //scanf("%s",input);
+      gets(input);
       //printf("比较%s:%s",input,word);
       if(strcmp(word,input) == 0)
       {
