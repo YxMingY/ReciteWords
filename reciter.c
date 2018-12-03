@@ -73,4 +73,5 @@ int main(int argc,char **argv)
     line = strtok(NULL,"\n");
   }
   free(text);
+  return 0;
 }
