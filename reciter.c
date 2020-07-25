@@ -33,17 +33,12 @@ int main(int argc,char **argv)
   char *line = strtok(text,"\n"),*word;
   char input[50],*tip;
   unsigned int lineLen = 0,wrongs = 0,i;
-  unsigned long long record = 0;
+  int records[50];
   while(line != NULL)
   {
     lineLen++;
     word = strstr(line,":");
     *word = '\0';
-    if(lineLen>20)
-    {
-      puts("每次最多20个单词!!!");
-      break;
-    }
     printf("第%d个单词: %s\n",lineLen,line);
     word++;
     tip = word;
@@ -54,7 +49,8 @@ int main(int argc,char **argv)
       if(strcmp(word,input) == 0)
       {
         puts("答对了，你真棒!");
-        record = record*10+wrongs+1;
+        records[lineLen-1] = wrongs+1;
+	//printf("%d %d\n",lineLen,records[lineLen-1]);
         wrongs = 0;
         break;
       }
@@ -65,7 +61,7 @@ int main(int argc,char **argv)
         {
           puts("你简直笨得要死啊!");
           printf("正确拼写: %s\n",word);
-          record = record*10+6;
+          records[lineLen-1] = 6;
           wrongs = 0;
           break;
         }
@@ -85,14 +81,6 @@ int main(int argc,char **argv)
   fseek(fp, 0, SEEK_SET);
   fread(text, sizeof(char), fileLen, fp);
   fclose(fp);
-  int bit;
-  unsigned long long division = 10;
-  for(bit=1;(record/division)!=0;division*=10)
-  {
-    bit++;
-  }
-  char *records = (char*)malloc(sizeof(char)*(unsigned int)bit);
-  sprintf(records,"%lld",record);
   line = strtok(text,"\n");
   lineLen = 0;
   while(line != NULL)
@@ -100,11 +88,10 @@ int main(int argc,char **argv)
     word = strstr(line,":");
     *word = '\0';
     word++;
-    printf("%s(%s) 回答次数: %c\n",line,word,records[lineLen]);
+    printf("%s(%s) 回答次数: %d\n",line,word,records[lineLen]);
     line = strtok(NULL,"\n");
     lineLen++;
   }
-  free(records);
   free(text);
   return 0;
 }
